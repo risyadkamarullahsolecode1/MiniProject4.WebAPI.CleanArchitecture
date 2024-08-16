@@ -9,5 +9,6 @@ namespace MiniProject4.Application.Interfaces
 {
     public interface IWorksonService
     {
+        Task AddWorkEntryAsync(int empNo, int projNo, int hoursWorked, Workson workson);
     }
 }

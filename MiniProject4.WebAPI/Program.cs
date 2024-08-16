@@ -4,6 +4,7 @@ using MiniProject4.Application.Services;
 using MiniProject4.Domain.Interfaces;
 using MiniProject4.Infrastructure;
 using MiniProject4.Infrastructure.Data.Repositories;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 

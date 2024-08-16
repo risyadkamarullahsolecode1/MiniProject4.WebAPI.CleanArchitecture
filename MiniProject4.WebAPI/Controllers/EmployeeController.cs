@@ -112,5 +112,45 @@ namespace MiniProject4.WebAPI.Controllers
         {
             return Ok(await _employeeService.GetNonManagerEmployees());
         }
+        [HttpGet("it-department")]
+        public async Task<IActionResult> GetITDepartmentEmployees()
+        {
+            var employees = await _employeeService.GetITDepartmentEmployeesAsync();
+            return Ok(employees);
+        }
+
+        [HttpPost("validate-retirement")]
+        public async Task<IActionResult> ValidateRetirement([FromBody] Employee employee)
+        {
+            if (employee == null)
+            {
+                return BadRequest("Employee data is required.");
+            }
+
+            bool shouldRetire = await _employeeService.ValidateRetirementAsync(employee);
+
+            if (shouldRetire)
+            {
+                return Ok(new { Message = "The employee should retire.", Retire = true });
+            }
+            else
+            {
+                return Ok(new { Message = "The employee does not need to retire.", Retire = false });
+            }
+        }
+        [HttpGet("can-add-to-it")]
+        public async Task<IActionResult> CanAddToITDepartment()
+        {
+            bool canAdd = await _employeeService.CanAddToITDepartmentAsync();
+
+            if (canAdd)
+            {
+                return Ok(new { Message = "You can add more employees to the IT department." });
+            }
+            else
+            {
+                return Ok(new { Message = "The IT department has reached its maximum capacity." });
+            }
+        }
     }
 }

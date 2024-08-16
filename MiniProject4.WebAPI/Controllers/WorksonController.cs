@@ -78,6 +78,22 @@ namespace MiniProject4.WebAPI.Controllers
             }
             return NoContent();
         }
-       
+        [HttpPut("add-workon-entry")]
+        public async Task<IActionResult> AddWorkEntry([FromQuery] int empNo, [FromQuery] int projNo, [FromQuery] int hoursWorked, [FromBody] Workson workson)
+        {
+            try
+            {
+                await _worksonService.AddWorkEntryAsync(empNo, projNo, hoursWorked, workson);
+                return Ok("Work entry added successfully.");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
     }
 }

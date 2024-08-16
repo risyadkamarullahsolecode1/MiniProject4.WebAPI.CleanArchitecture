@@ -26,7 +26,27 @@ namespace MiniProject4.Application.Services
             _configuration = configuration;
         }
 
-       public async Task<IEnumerable<Employee>> GetEmployeesBrics()
+        //penggunaan constraint untuk pengecekan tanggal dob pada employee yang harus retire
+        public async Task<bool> ValidateRetirementAsync(Employee employee)
+        {
+            var retirementAge = _configuration.GetValue<int>("CompanySettings:RetireEmployee");
+            var today = DateTime.Now.Year;
+
+            var employeeAge = today - employee.Dob.Value.Year;
+            return employeeAge >= retirementAge;
+        }
+
+        //penggunaan constraint MaxEmployeeITDepartemnt 
+        public async Task<bool> CanAddToITDepartmentAsync()
+        {
+            var maxITEmployees = _configuration.GetValue<int>("Constraints:ITDepartmentMaxEmployee"); 
+            
+            var currentITEmployeeCount = (await GetITDepartmentEmployeesAsync()).Count();
+            
+            return currentITEmployeeCount >= maxITEmployees;
+        }
+
+        public async Task<IEnumerable<Employee>> GetEmployeesBrics()
         {
             var bricsCountries = new List<string> { "Brazil", "Russia", "India", "China", "South Africa" };
             var employees = await _employeeRepository.GetAllEmployees();
@@ -73,8 +93,25 @@ namespace MiniProject4.Application.Services
 
             var managers = departments.Select(d => d.Mgrempno).ToList();
             return employees
-                .Where(e => !managers.Contains(e.Empno))
+                .Where(e => managers.Contains(e.Empno))
                 .OrderBy(e => e.Fname)
+                .ToList();
+        }
+
+        public async Task<IEnumerable<Employee>> GetITDepartmentEmployeesAsync()
+        {
+            var departments = await _departmentRepository.GetAllDepartments();
+            var itDepartment = departments.FirstOrDefault(d => d.Deptno == 1);
+
+            if (itDepartment == null)
+            {
+                return new List<Employee>(); // Return empty list if IT department is not found
+            }
+
+            var employees = await _employeeRepository.GetAllEmployees();
+            return employees
+                .Where(e => e.Deptno == itDepartment.Deptno)
+                .OrderBy(e => e.Lname)
                 .ToList();
         }
     }
