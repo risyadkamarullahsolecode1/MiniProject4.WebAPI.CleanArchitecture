@@ -21,14 +21,64 @@ namespace MiniProject4.WebAPI.Controllers
             _employeeRepository = employeeRepository;
             _employeeService = employeeService;
         }
+        /// <summary>
+        /// You get, get by id or delete here
+        /// </summary>
 
+        /// <remarks>
+        /// All the parameters in the request body can be null. 
+        ///
+        ///  You can search by using any of the parameters in the request.
+        ///  
+        ///  NOTE: You can only search by one parameter at a time
+        ///  
+        /// Sample request:
+        ///
+        ///     GET /api/v1/Employee
+        ///     
+        ///     OR
+        ///     
+        ///     GET /api/v1/Employee/{id}
+        ///    
+        ///     OR
+        ///     
+        ///     DELETE /api/v1/Employee/{id}
+        ///     
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet]
         [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Employee>>> GetAllEmployeesAsync()
         {
             return Ok(await _employeeRepository.GetAllEmployees());
         }
+        /// <summary>
+        /// You get, get by id or delete here
+        /// </summary>
 
+        /// <remarks>
+        /// All the parameters in the request body can be null. 
+        ///
+        ///  You can search by using any of the parameters in the request.
+        ///  
+        ///  NOTE: You can only search by one parameter at a time
+        ///  
+        /// Sample request:
+        ///
+        ///     GET /api/v1/Employee
+        ///     
+        ///     OR
+        ///     
+        ///     GET /api/v1/Employee/{id}
+        ///    
+        ///     OR
+        ///     
+        ///     DELETE /api/v1/Employee/{id}
+        ///     
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet("{id}")]
         [MapToApiVersion("1.0")]
         public async Task<ActionResult<Employee>> GetEmployeeByIdAsync(int id)
@@ -40,7 +90,52 @@ namespace MiniProject4.WebAPI.Controllers
             }
             return Ok(employee);
         }
+        /// <summary>
+        /// You can add or update user here
+        /// </summary>
 
+        /// <remarks>
+        /// All the parameters in the request body can be null. 
+        ///
+        ///  You can search by using any of the parameters in the request.
+        ///  
+        ///  NOTE: You can only search by one parameter at a time
+        ///  
+        /// Sample request:
+        ///
+        ///     POST /api/v1/Employee
+        ///     {
+        ///         "empno": 31,
+        ///         "fname": "Anya",
+        ///         "lname": "Vasily",
+        ///         "address": "Moskowa, Russia",
+        ///         "dob": "1975-08-09",
+        ///         "sex": "Female",
+        ///         "position": "Content Planner",
+        ///         "deptno": 31, 
+        ///         "departments": [],
+        ///         "deptnoNavigation": null,
+        ///         "worksons": []
+        ///     }
+        ///     OR
+        ///     
+        ///     PUT /api/v1/Employee/{id}
+        ///     {
+        ///         "empno": 31,
+        ///         "fname": "Anya",
+        ///         "lname": "Vasily",
+        ///         "address": "Moskowa, Russia",
+        ///         "dob": "1975-08-09",
+        ///         "sex": "Female",
+        ///         "position": "Content Planner",
+        ///         "deptno": 31, 
+        ///         "departments": [],
+        ///         "deptnoNavigation": null,
+        ///         "worksons": []
+        ///     }
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpPost]
         [MapToApiVersion("1.0")]
         public async Task<ActionResult<Employee>> AddEmployee(Employee employee)
@@ -48,7 +143,52 @@ namespace MiniProject4.WebAPI.Controllers
             var createdEmployee = await _employeeRepository.AddEmployee(employee);
             return Ok(createdEmployee);
             //return CreatedAtAction(nameof(GetEmployeeByIdAsync), new { id = createdEmployee.Empno }, createdEmployee);
-        }
+        }/// <summary>
+         /// You can add or update user here
+         /// </summary>
+
+         /// <remarks>
+         /// All the parameters in the request body can be null. 
+         ///
+         ///  You can search by using any of the parameters in the request.
+         ///  
+         ///  NOTE: You can only search by one parameter at a time
+         ///  
+         /// Sample request:
+         ///
+         ///     POST /api/v1/Employee
+         ///     {
+         ///         "empno": 31,
+         ///         "fname": "Anya",
+         ///         "lname": "Vasily",
+         ///         "address": "Moskowa, Russia",
+         ///         "dob": "1975-08-09",
+         ///         "sex": "Female",
+         ///         "position": "Content Planner",
+         ///         "deptno": 31, 
+         ///         "departments": [],
+         ///         "deptnoNavigation": null,
+         ///         "worksons": []
+         ///     }
+         ///     OR
+         ///     
+         ///     PUT /api/v1/Employee/{id}
+         ///     {
+         ///         "empno": 31,
+         ///         "fname": "Anya",
+         ///         "lname": "Vasily",
+         ///         "address": "Moskowa, Russia",
+         ///         "dob": "1975-08-09",
+         ///         "sex": "Female",
+         ///         "position": "Content Planner",
+         ///         "deptno": 31, 
+         ///         "departments": [],
+         ///         "deptnoNavigation": null,
+         ///         "worksons": []
+         ///     }
+         /// </remarks>
+         /// <param name="request"></param>
+         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpPut("{id}")]
         [MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateEmployee(int id, Employee employee)
@@ -65,7 +205,32 @@ namespace MiniProject4.WebAPI.Controllers
             }
 
             return NoContent();
-        }
+        }/// <summary>
+         /// You get, get by id or delete here
+         /// </summary>
+
+         /// <remarks>
+         /// All the parameters in the request body can be null. 
+         ///
+         ///  You can search by using any of the parameters in the request.
+         ///  
+         ///  NOTE: You can only search by one parameter at a time
+         ///  
+         /// Sample request:
+         ///
+         ///     GET /api/v1/Employee
+         ///     
+         ///     OR
+         ///     
+         ///     GET /api/v1/Employee/{id}
+         ///    
+         ///     OR
+         ///     
+         ///     DELETE /api/v1/Employee/{id}
+         ///     
+         /// </remarks>
+         /// <param name="request"></param>
+         /// <returns> This endpoint returns a list of Accounts.</returns>
         [MapToApiVersion("1.0")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)

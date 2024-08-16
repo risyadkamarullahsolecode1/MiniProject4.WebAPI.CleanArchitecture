@@ -22,6 +22,32 @@ namespace MiniProject4.WebAPI.Controllers
             _worksonService = worksonService;
         }
 
+        /// <summary>
+        /// You get, get by id or delete here
+        /// </summary>
+
+        /// <remarks>
+        /// All the parameters in the request body can be null. 
+        ///
+        ///  You can search by using any of the parameters in the request.
+        ///  
+        ///  NOTE: You can only search by one parameter at a time
+        ///  
+        /// Sample request:
+        ///
+        ///     GET /api/v1/Workson
+        ///     
+        ///     OR
+        ///     
+        ///     GET /api/v1/Workson/{id}
+        ///    
+        ///     OR
+        ///     
+        ///     DELETE /api/v1/Workson/{id}
+        ///     
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet]
         [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Workson>>> GetAllWorkOn()
@@ -29,6 +55,32 @@ namespace MiniProject4.WebAPI.Controllers
             return Ok(await _worksonRepository.GetAllWorkOn());
         }
 
+        /// <summary>
+        /// You get, get by id or delete here
+        /// </summary>
+
+        /// <remarks>
+        /// All the parameters in the request body can be null. 
+        ///
+        ///  You can search by using any of the parameters in the request.
+        ///  
+        ///  NOTE: You can only search by one parameter at a time
+        ///  
+        /// Sample request:
+        ///
+        ///     GET /api/v1/Workson
+        ///     
+        ///     OR
+        ///     
+        ///     GET /api/v1/Workson/{empno}/{projNo}
+        ///    
+        ///     OR
+        ///     
+        ///     DELETE /api/v1/Workson/{id}
+        ///     
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet("{empNo}/{projNo}")]
         [MapToApiVersion("1.0")]
         public async Task<ActionResult<Workson>> GetWorkOnById(int empNo, int projNo)
@@ -66,7 +118,32 @@ namespace MiniProject4.WebAPI.Controllers
             }
             return NoContent();
         }
+        /// <summary>
+        /// You get, get by id or delete here
+        /// </summary>
 
+        /// <remarks>
+        /// All the parameters in the request body can be null. 
+        ///
+        ///  You can search by using any of the parameters in the request.
+        ///  
+        ///  NOTE: You can only search by one parameter at a time
+        ///  
+        /// Sample request:
+        ///
+        ///     GET /api/v1/Workson
+        ///     
+        ///     OR
+        ///     
+        ///     GET /api/v1/Workson/{empno}/{projNo}
+        ///    
+        ///     OR
+        ///     
+        ///     DELETE /api/v1/Workson/{id}
+        ///     
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpDelete("{empNo}/{projNo}")]
         [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteWorkOn(int empNo, int projNo)

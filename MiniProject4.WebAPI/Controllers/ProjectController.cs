@@ -20,6 +20,32 @@ namespace MiniProject4.WebAPI.Controllers
             _projectService = projectService;
         }
 
+        /// <summary>
+        /// You get, get by id or delete here
+        /// </summary>
+
+        /// <remarks>
+        /// All the parameters in the request body can be null. 
+        ///
+        ///  You can search by using any of the parameters in the request.
+        ///  
+        ///  NOTE: You can only search by one parameter at a time
+        ///  
+        /// Sample request:
+        ///
+        ///     GET /api/v1/Project
+        ///     
+        ///     OR
+        ///     
+        ///     GET /api/v1/Project/{id}
+        ///    
+        ///     OR
+        ///     
+        ///     DELETE /api/v1/Project/{id}
+        ///     
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet]
         [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Project>>> GetAllProjects()
@@ -27,6 +53,32 @@ namespace MiniProject4.WebAPI.Controllers
             return Ok(await _projectRepository.GetAllProjects());
         }
 
+        /// <summary>
+        /// You get, get by id or delete here
+        /// </summary>
+
+        /// <remarks>
+        /// All the parameters in the request body can be null. 
+        ///
+        ///  You can search by using any of the parameters in the request.
+        ///  
+        ///  NOTE: You can only search by one parameter at a time
+        ///  
+        /// Sample request:
+        ///
+        ///     GET /api/v1/Project
+        ///     
+        ///     OR
+        ///     
+        ///     GET /api/v1/Project/{id}
+        ///    
+        ///     OR
+        ///     
+        ///     DELETE /api/v1/Project/{id}
+        ///     
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet("{id}")]
         [MapToApiVersion("1.0")]
         public async Task<ActionResult<Project>> GetProjectById(int id)
@@ -64,6 +116,32 @@ namespace MiniProject4.WebAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// You get, get by id or delete here
+        /// </summary>
+
+        /// <remarks>
+        /// All the parameters in the request body can be null. 
+        ///
+        ///  You can search by using any of the parameters in the request.
+        ///  
+        ///  NOTE: You can only search by one parameter at a time
+        ///  
+        /// Sample request:
+        ///
+        ///     GET /api/v1/Project
+        ///     
+        ///     OR
+        ///     
+        ///     GET /api/v1/Project/{id}
+        ///    
+        ///     OR
+        ///     
+        ///     DELETE /api/v1/Project/{id}
+        ///     
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpDelete("{id}")]
         [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteDepartment(int id)
