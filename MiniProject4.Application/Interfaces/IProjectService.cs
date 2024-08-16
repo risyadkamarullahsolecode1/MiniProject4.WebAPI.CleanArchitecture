@@ -9,7 +9,7 @@ namespace MiniProject4.Application.Interfaces
 {
     public interface IProjectService
     {
-        Task CreateProject(int deptNo, int projNo, Project project);
+        
 
         Task<IEnumerable<Project>> GetProjectsManagedByPlanning();
         Task<IEnumerable<Project>> GetProjectsWithNoEmployees();

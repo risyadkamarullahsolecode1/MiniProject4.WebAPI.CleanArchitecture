@@ -9,7 +9,5 @@ namespace MiniProject4.Application.Interfaces
 {
     public interface IWorksonService
     {
-        Task<bool> MaxHoursEmployeeToProject(int empNo, int projNo, int hoursWorked);
-        Task MaxEmployeeToProject(int empNo, int projNo, Workson workson);
     }
 }

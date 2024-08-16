@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using MiniProject4.Application.Interfaces;
 using MiniProject4.Domain.Entities;
 using MiniProject4.Domain.Interfaces;
 
 namespace MiniProject4.WebAPI.Controllers
 {
-    [Route("api/[Controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[Controller]")]
     [ApiController]
     public class ProjectController : ControllerBase
     {
@@ -18,12 +21,14 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Project>>> GetAllProjects()
         {
             return Ok(await _projectRepository.GetAllProjects());
         }
 
         [HttpGet("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Project>> GetProjectById(int id)
         {
             var project = await _projectRepository.GetProjectById(id);
@@ -35,6 +40,7 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Project>> AddProject(Project project)
         {
             var createdProject = await _projectRepository.AddProject(project);
@@ -42,6 +48,7 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateProject(int id, Project project)
         {
             if (id != project.Projno)
@@ -58,6 +65,7 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteDepartment(int id)
         {
             var deleted = await _projectRepository.DeleteProject(id);
@@ -67,31 +75,21 @@ namespace MiniProject4.WebAPI.Controllers
             }
             return NoContent();
         }
-        [HttpPost("Max-Project-department")]
-        public async Task<IActionResult> CreateProject(int deptNo, int projNo, Project project)
-        {
-            try
-            {
-                await _projectService.CreateProject(deptNo, projNo, project);
-                return Ok("Project created successfully.");
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
 
         [HttpGet("managed-byPlanning")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Project>>> GetProjectsManagedByPlanning()
         {
             return Ok(await _projectService.GetProjectsManagedByPlanning());
         }
         [HttpGet("project-with-NoEmployee")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Project>>> GetProjectsWithNoEmployees()
         {
             return Ok(await _projectService.GetProjectsWithNoEmployees());
         }
         [HttpGet("managed-by-FemaleManagers")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<object>>> GetProjectsManagedByFemaleManagers()
         {
             return Ok(await _projectService.GetProjectsManagedByFemaleManagers());

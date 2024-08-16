@@ -25,18 +25,6 @@ namespace MiniProject4.Application.Services
             _worksonRepository = worksonRepository;
             _configuration = configuration;
         }
-        public async Task CreateProject(int deptNo, int projNo, Project project)
-        {
-            var maxProjects = _configuration.GetValue<int>("CompanySettings:MaxProjectPerDepartment");
-            var department = await _departmentRepository.GetDepartmentById(deptNo);
-
-            if (project.Projno >= maxProjects && department.Projects.Count >= maxProjects)
-                throw new InvalidOperationException("This department cannot handle more than 10 projects.");
-
-            // Proceed with project creation...
-            await _projectRepository.AddProject(project);
-            return;
-        }
 
         public async Task<IEnumerable<Project>> GetProjectsManagedByPlanning()
         {

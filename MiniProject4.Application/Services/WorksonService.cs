@@ -27,36 +27,5 @@ namespace MiniProject4.Application.Services
             _configuration = configuration;
         }
 
-        public async Task<bool> MaxHoursEmployeeToProject(int empNo, int projNo, int hoursWorked)
-        {
-            var project = await _projectRepository.GetProjectById(empNo);
-            if (project == null)
-            {
-                throw new ArgumentException("Project not found");
-            }
-
-            var maxWorkingHours = _configuration.GetValue<int>("CompanySettings:WorkingHours");
-            var workson = await _worksonRepository.GetWorkOnById(projNo, hoursWorked);
-
-            if (workson.Hoursworked == null) 
-                throw new InvalidOperationException("Project current hours are not set.");
-            if (workson.Hoursworked + hoursWorked > maxWorkingHours)
-                throw new Exception("This project cannot exceeds more than 600 hours");
-
-            await _worksonRepository.UpdateWorkOn(empNo, projNo, workson);
-            return true;
-        }
-
-        public async Task MaxEmployeeToProject(int empNo, int projNo, Workson workson)
-        {
-            var maxProjects = _configuration.GetValue<int>("CompanySettings:EmployeePerProject");
-            var employee = await _employeeRepository.GetEmployeeById(empNo);
-
-            if(employee.Worksons.Count >= maxProjects)
-                throw new InvalidOperationException("An employee cannot be assigned to more than 3 projects.");
-
-            await _worksonRepository.AddWorkOn(workson);
-            return ;
-        }
     }
 }
