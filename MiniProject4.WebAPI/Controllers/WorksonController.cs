@@ -7,9 +7,7 @@ using MiniProject4.Domain.Interfaces;
 
 namespace MiniProject4.WebAPI.Controllers
 {
-    [ApiVersion("1.0")]
-    [ApiVersion("2.0")]
-    [Route("api/v{version:apiVersion}/[Controller]")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class WorksonController : ControllerBase
     {
@@ -49,7 +47,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Workson>>> GetAllWorkOn()
         {
             return Ok(await _worksonRepository.GetAllWorkOn());
@@ -82,7 +79,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet("{empNo}/{projNo}")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Workson>> GetWorkOnById(int empNo, int projNo)
         {
             var project = await _worksonRepository.GetWorkOnById(empNo, projNo);
@@ -94,7 +90,6 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpPost]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Workson>> AddWorkOn(Workson workson)
         {
             var createdWorkson = await _worksonRepository.AddWorkOn(workson);
@@ -103,7 +98,6 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpPut("{empNo}/{projNo}")]
-        [MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateWorkOn(int empNo, int projNo, Workson workson)
         {
             if (empNo != workson.Empno)
@@ -145,7 +139,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpDelete("{empNo}/{projNo}")]
-        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteWorkOn(int empNo, int projNo)
         {
             var deleted = await _worksonRepository.DeleteWorkOn(empNo, projNo);

@@ -7,9 +7,7 @@ using MiniProject4.Domain.Interfaces;
 
 namespace MiniProject4.WebAPI.Controllers
 {
-    [ApiVersion("1.0")]
-    [ApiVersion("2.0")]
-    [Route("api/v{version:apiVersion}/[Controller]")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class DepartmentController : ControllerBase
     {
@@ -49,7 +47,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <returns> This endpoint returns a list of Accounts.</returns>
 
         [HttpGet]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Employee>>> GetAllDepartment()
         {
             return Ok(await _departemntRepository.GetAllDepartments());
@@ -82,7 +79,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet("{id}")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Employee>> GetDepartmentById(int id)
         {
             var employee = await _departemntRepository.GetDepartmentById(id);
@@ -94,7 +90,6 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpPost]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Employee>> AddDepartment(Department department)
         {
             var createdDepartment = await _departemntRepository.AddDepartment(department);
@@ -102,7 +97,6 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        [MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateDepartment(int id, Department department)
         {
             if (id != department.Deptno)
@@ -145,7 +139,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpDelete("{id}")]
-        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteDepartment(int id)
         {
             var deleted = await _departemntRepository.DeleteDepartment(id);
@@ -157,14 +150,12 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpGet("more-10-employees")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<object>>> GetDepartmentsWithMoreThan10Employees()
         {
             return Ok(await _departmentServices.GetDepartmentsWithMoreThan10Employees());
         }
 
         [HttpGet("it-Department")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<object>>> GetEmployeeDetailsByDepartment()
         {
             return Ok(await _departmentServices.GetEmployeeDetailsByDepartment("IT"));

@@ -8,9 +8,7 @@ using MiniProject4.Infrastructure.Data.Repositories;
 
 namespace MiniProject4.WebAPI.Controllers
 {
-    [ApiVersion("1.0")]
-    [ApiVersion("2.0")]
-    [Route("api/v{version:apiVersion}/[Controller]")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
@@ -48,7 +46,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Employee>>> GetAllEmployeesAsync()
         {
             return Ok(await _employeeRepository.GetAllEmployees());
@@ -80,7 +77,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet("{id}")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Employee>> GetEmployeeByIdAsync(int id)
         {
             var employee = await _employeeRepository.GetEmployeeById(id);
@@ -137,7 +133,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpPost]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Employee>> AddEmployee(Employee employee)
         {
             var createdEmployee = await _employeeRepository.AddEmployee(employee);
@@ -190,7 +185,6 @@ namespace MiniProject4.WebAPI.Controllers
          /// <param name="request"></param>
          /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpPut("{id}")]
-        [MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateEmployee(int id, Employee employee)
         {
             if (id != employee.Empno)
@@ -231,7 +225,6 @@ namespace MiniProject4.WebAPI.Controllers
          /// </remarks>
          /// <param name="request"></param>
          /// <returns> This endpoint returns a list of Accounts.</returns>
-        [MapToApiVersion("1.0")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
@@ -244,35 +237,30 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpGet("brics")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployeesBrics()
         {
             return Ok(await _employeeService.GetEmployeesBrics());
         }
 
         [HttpGet("born-1980-1990")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployeeBornBetween1980And1990()
         {
             return Ok(await _employeeService.GetEmployeeBornBetween1980And1990());
         }
 
         [HttpGet("female-born-after1990")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Employee>>> GetFemaleEmployeeBornAfter1990()
         {
             return Ok(await _employeeService.GetFemaleEmployeeBornAfter1990());
         }
 
         [HttpGet("female-managers")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Employee>>> GetFemaleManagers()
         {
             return Ok(await _employeeService.GetFemaleManagers());
         }
 
         [HttpGet("non-managers")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Employee>>> GetNonManagerEmployees()
         {
             return Ok(await _employeeService.GetNonManagerEmployees());

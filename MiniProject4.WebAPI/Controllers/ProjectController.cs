@@ -6,9 +6,7 @@ using MiniProject4.Domain.Interfaces;
 
 namespace MiniProject4.WebAPI.Controllers
 {
-    [ApiVersion("1.0")]
-    [ApiVersion("2.0")]
-    [Route("api/v{version:apiVersion}/[Controller]")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class ProjectController : ControllerBase
     {
@@ -143,7 +141,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpDelete("{id}")]
-        [MapToApiVersion("1.0")]
         public async Task<IActionResult> DeleteDepartment(int id)
         {
             var deleted = await _projectRepository.DeleteProject(id);
@@ -155,19 +152,16 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpGet("managed-byPlanning")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Project>>> GetProjectsManagedByPlanning()
         {
             return Ok(await _projectService.GetProjectsManagedByPlanning());
         }
         [HttpGet("project-with-NoEmployee")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Project>>> GetProjectsWithNoEmployees()
         {
             return Ok(await _projectService.GetProjectsWithNoEmployees());
         }
         [HttpGet("managed-by-FemaleManagers")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<object>>> GetProjectsManagedByFemaleManagers()
         {
             return Ok(await _projectService.GetProjectsManagedByFemaleManagers());
