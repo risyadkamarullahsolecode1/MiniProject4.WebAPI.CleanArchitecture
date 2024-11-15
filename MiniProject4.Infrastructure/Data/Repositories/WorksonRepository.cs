@@ -29,7 +29,7 @@ namespace MiniProject4.Infrastructure.Data.Repositories
 
         public async Task<Workson> AddWorkOn(Workson workson)
         {
-            _context.Worksons.Add(workson);
+            await _context.Worksons.AddAsync(workson);
             await _context.SaveChangesAsync();
             return workson;
         }

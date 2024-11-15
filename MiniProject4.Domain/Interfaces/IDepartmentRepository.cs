@@ -13,6 +13,7 @@ namespace MiniProject4.Domain.Interfaces
         Task<Department> GetDepartmentById(int id);
         Task<Department> AddDepartment(Department department);
         Task<Department> UpdateDepartment(int id, Department department);
-        Task<bool> DeleteDepartment(int id);
+        Task DeleteDepartment(int id);
+        Task<IEnumerable<Employee>> GetEmployee(int deptNo);
     }
 }

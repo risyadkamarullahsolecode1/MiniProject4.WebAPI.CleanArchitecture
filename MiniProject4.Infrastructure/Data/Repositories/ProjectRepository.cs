@@ -44,17 +44,11 @@ namespace MiniProject4.Infrastructure.Data.Repositories
             return project;
         }
 
-        public async Task<bool> DeleteProject(int id)
+        public async Task DeleteProject(int id)
         {
             var project = await _context.Projects.FindAsync(id);
-            if (project == null)
-            {
-                return false;
-            }
-
             _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
-            return true;
         }
 
         public async Task<int> GetTotalHoursWorked(int projNo)
@@ -62,6 +56,17 @@ namespace MiniProject4.Infrastructure.Data.Repositories
             return await _context.Worksons
                 .Where(w => w.Projno == projNo)
                 .SumAsync(w => w.Hoursworked ?? 0);
+        }
+
+        public async Task<Department> GetDepartmentAsync(int projNo)
+        {
+            var department = await _context.Projects
+                .Where(p => p.Projno == projNo)
+                .Include(p => p.DeptnoNavigation) // Assuming DeptnoNavigation is the navigation property for the department
+                .Select(p => p.DeptnoNavigation)  // Selects the department associated with the project
+                .FirstOrDefaultAsync();
+
+            return department;
         }
     }
 }

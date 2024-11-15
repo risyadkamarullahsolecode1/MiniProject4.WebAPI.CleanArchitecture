@@ -305,5 +305,12 @@ namespace MiniProject4.WebAPI.Controllers
                 return Ok(new { Message = "The IT department has reached its maximum capacity." });
             }
         }
+
+        [HttpGet("{projNo}/projects")]
+        public async Task<IActionResult> GetDepartmentAsync(int projNo)
+        {
+            var res = await _employeeRepository.GetEmployeesByProjectAsync(projNo);
+            return Ok(res);
+        }
     }
 }

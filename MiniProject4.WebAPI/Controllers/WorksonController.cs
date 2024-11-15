@@ -49,7 +49,8 @@ namespace MiniProject4.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Workson>>> GetAllWorkOn()
         {
-            return Ok(await _worksonRepository.GetAllWorkOn());
+            var res = await _worksonRepository.GetAllWorkOn();
+            return Ok(res);
         }
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace MiniProject4.WebAPI.Controllers
             {
                 return NotFound();
             }
-            return NoContent();
+            return Ok(updatedWorkson);
         }
         /// <summary>
         /// You get, get by id or delete here

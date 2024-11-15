@@ -60,16 +60,22 @@ namespace MiniProject4.Application.Services
         public async Task<IEnumerable<Employee>> GetEmployeeBornBetween1980And1990()
         {
             var employees = await _employeeRepository.GetAllEmployees();
-                return employees
-                .Where(e => e.Dob >= new DateTime(1980, 1, 1) && e.Dob <= new DateTime(1990, 12, 31))
+            var startDate = DateOnly.FromDateTime(new DateTime(1980, 1, 1));
+            var endDate = DateOnly.FromDateTime(new DateTime(1990, 12, 31));
+
+            return employees
+                .Where(e => e.Dob >= startDate && e.Dob <= endDate)
                 .ToList();
         }
+
 
         public async Task<IEnumerable<Employee>> GetFemaleEmployeeBornAfter1990()
         {
             var employees = await _employeeRepository.GetAllEmployees();
+            var cutoffDate = DateOnly.FromDateTime(new DateTime(1990, 12, 31));
+
             return employees
-                .Where(e => e.Sex == "Female" && e.Dob > new DateTime(1990, 12, 31))
+                .Where(e => e.Sex == "Female" && e.Dob > cutoffDate)
                 .OrderBy(e => e.Fname)
                 .ToList();
         }

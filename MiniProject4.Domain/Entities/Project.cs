@@ -13,7 +13,6 @@ public partial class Project
     public int Projno { get; set; }
 
     [Column("projname")]
-    [StringLength(50)]
     public string? Projname { get; set; }
 
     [Column("deptno")]

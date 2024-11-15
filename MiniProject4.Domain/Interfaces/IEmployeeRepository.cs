@@ -14,5 +14,6 @@ namespace MiniProject4.Domain.Interfaces
         Task<Employee> AddEmployee(Employee employee);
         Task<Employee> UpdateEmployee(Employee employee);
         Task<bool> DeleteEmployee(int id);
+        Task<IEnumerable<object>> GetEmployeesByProjectAsync(int projNo);
     }
 }

@@ -30,7 +30,7 @@ namespace MiniProject4.Infrastructure.Data.Repositories
 
         public async Task<Department> AddDepartment(Department department)
         {
-            _context.Departments.Add(department);
+            await _context.Departments.AddAsync(department);
             await _context.SaveChangesAsync();
             return department;
         }
@@ -42,18 +42,21 @@ namespace MiniProject4.Infrastructure.Data.Repositories
             return department;
         }
 
-        public async Task<bool> DeleteDepartment(int id)
+        public async Task DeleteDepartment(int id)
         {
             var department = await _context.Departments.FindAsync(id);
-            if (department == null)
-            {
-                return false;
-            }
-
+            if (department == null) return ;
+            
             _context.Departments.Remove(department);
             await _context.SaveChangesAsync();
-            return true;
         }
 
+        public async Task<IEnumerable<Employee>> GetEmployee(int deptNo) 
+        { 
+            var employeeInDept = await _context.Employees
+                .Where(e => e.Deptno == deptNo)
+                .ToListAsync();
+            return employeeInDept;
+        }
     }
 }

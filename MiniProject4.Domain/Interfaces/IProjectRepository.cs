@@ -13,6 +13,7 @@ namespace MiniProject4.Domain.Interfaces
         Task<Project> GetProjectById(int id);
         Task<Project> AddProject(Project project);
         Task<Project> UpdateProject(int id, Project project);
-        Task<bool> DeleteProject(int id);
+        Task DeleteProject(int id);
+        Task<Department> GetDepartmentAsync(int projNo);
     }
 }

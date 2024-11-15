@@ -45,7 +45,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Project>>> GetAllProjects()
         {
             return Ok(await _projectRepository.GetAllProjects());
@@ -78,7 +77,6 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpGet("{id}")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Project>> GetProjectById(int id)
         {
             var project = await _projectRepository.GetProjectById(id);
@@ -90,7 +88,6 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpPost]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Project>> AddProject(Project project)
         {
             var createdProject = await _projectRepository.AddProject(project);
@@ -98,7 +95,6 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        [MapToApiVersion("1.0")]
         public async Task<IActionResult> UpdateProject(int id, Project project)
         {
             if (id != project.Projno)
@@ -111,7 +107,7 @@ namespace MiniProject4.WebAPI.Controllers
             {
                 return NotFound();
             }
-            return NoContent();
+            return Ok(updatedProject);
         }
 
         /// <summary>
@@ -141,14 +137,10 @@ namespace MiniProject4.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns> This endpoint returns a list of Accounts.</returns>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDepartment(int id)
+        public async Task<IActionResult> DeleteProject(int id)
         {
-            var deleted = await _projectRepository.DeleteProject(id);
-            if (!deleted)
-            {
-                return NotFound();
-            }
-            return NoContent();
+            await _projectRepository.DeleteProject(id);
+            return Ok($"Succesfully delete project with id : {id}"); ;
         }
 
         [HttpGet("managed-byPlanning")]
@@ -165,6 +157,13 @@ namespace MiniProject4.WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<object>>> GetProjectsManagedByFemaleManagers()
         {
             return Ok(await _projectService.GetProjectsManagedByFemaleManagers());
+        }
+
+        [HttpGet("{projNo}/department")]
+        public async Task<IActionResult> GetDepartmentAsync(int projNo)
+        {
+            var res = await _projectRepository.GetDepartmentAsync(projNo);
+            return Ok(res);
         }
     }
 }

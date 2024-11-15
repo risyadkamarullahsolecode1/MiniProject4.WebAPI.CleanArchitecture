@@ -4,6 +4,7 @@ using MiniProject4.Application.Interfaces;
 using MiniProject4.Application.Services;
 using MiniProject4.Domain.Entities;
 using MiniProject4.Domain.Interfaces;
+using MiniProject4.Infrastructure.Data.Repositories;
 
 namespace MiniProject4.WebAPI.Controllers
 {
@@ -11,12 +12,12 @@ namespace MiniProject4.WebAPI.Controllers
     [ApiController]
     public class DepartmentController : ControllerBase
     {
-        public readonly IDepartmentRepository _departemntRepository;
+        public readonly IDepartmentRepository _departmentRepository;
         public readonly IDepartmentServices _departmentServices;
-        public DepartmentController(IDepartmentRepository departemntRepository, IDepartmentServices departemntServices)
+        public DepartmentController(IDepartmentRepository departmentRepository, IDepartmentServices departmentServices)
         {
-            _departemntRepository = departemntRepository;
-            _departmentServices = departemntServices;
+            _departmentRepository = departmentRepository;
+            _departmentServices = departmentServices;
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace MiniProject4.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> GetAllDepartment()
         {
-            return Ok(await _departemntRepository.GetAllDepartments());
+            return Ok(await _departmentRepository.GetAllDepartments());
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace MiniProject4.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetDepartmentById(int id)
         {
-            var employee = await _departemntRepository.GetDepartmentById(id);
+            var employee = await _departmentRepository.GetDepartmentById(id);
             if (employee == null)
             {
                 return NotFound();
@@ -92,7 +93,18 @@ namespace MiniProject4.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> AddDepartment(Department department)
         {
-            var createdDepartment = await _departemntRepository.AddDepartment(department);
+            // Validate the department model first
+            if (department == null)
+            {
+                return BadRequest("Department data is required.");
+            }
+
+            if (string.IsNullOrEmpty(department.Deptname))
+            {
+                return BadRequest("Department name is required.");
+            }
+
+            var createdDepartment = await _departmentRepository.AddDepartment(department);
             return CreatedAtAction(nameof(GetDepartmentById), new { id = createdDepartment.Deptno }, createdDepartment);
         }
 
@@ -104,12 +116,12 @@ namespace MiniProject4.WebAPI.Controllers
                 return BadRequest();
             }
 
-            var updatedDepartment = await _departemntRepository.UpdateDepartment(id, department);
+            var updatedDepartment = await _departmentRepository.UpdateDepartment(id, department);
             if (updatedDepartment == null)
             {
                 return NotFound();
             }
-            return NoContent();
+            return Ok(updatedDepartment);
         }
 
         /// <summary>
@@ -141,12 +153,8 @@ namespace MiniProject4.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDepartment(int id)
         {
-            var deleted = await _departemntRepository.DeleteDepartment(id);
-            if (!deleted)
-            {
-                return NotFound();
-            }
-            return NoContent();
+            await _departmentRepository.DeleteDepartment(id);
+            return Ok($"Succesfully delete department with id : {id}");
         }
 
         [HttpGet("more-10-employees")]
@@ -159,6 +167,12 @@ namespace MiniProject4.WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<object>>> GetEmployeeDetailsByDepartment()
         {
             return Ok(await _departmentServices.GetEmployeeDetailsByDepartment("IT"));
+        }
+        [HttpGet("{deptNo}/employees")]
+        public async Task<IActionResult> GetEmployee(int deptNo)
+        {
+            var res = await _departmentRepository.GetEmployee(deptNo);
+            return Ok(res);
         }
     }
 }
