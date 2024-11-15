@@ -18,5 +18,6 @@ namespace MiniProject4.Application.Interfaces
         Task<IEnumerable<Employee>> GetFemaleManagers();
         Task<IEnumerable<Employee>> GetNonManagerEmployees();
         Task<IEnumerable<Employee>> GetITDepartmentEmployeesAsync();
+        Task<Employee> AddAsync(Employee employee);
     }
 }

@@ -135,7 +135,7 @@ namespace MiniProject4.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> AddEmployee(Employee employee)
         {
-            var createdEmployee = await _employeeRepository.AddEmployee(employee);
+            var createdEmployee = await _employeeService.AddAsync(employee);
             return Ok(createdEmployee);
             //return CreatedAtAction(nameof(GetEmployeeByIdAsync), new { id = createdEmployee.Empno }, createdEmployee);
         }/// <summary>

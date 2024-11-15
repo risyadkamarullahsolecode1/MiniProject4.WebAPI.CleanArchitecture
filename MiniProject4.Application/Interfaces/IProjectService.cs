@@ -9,10 +9,9 @@ namespace MiniProject4.Application.Interfaces
 {
     public interface IProjectService
     {
-        
-
         Task<IEnumerable<Project>> GetProjectsManagedByPlanning();
         Task<IEnumerable<Project>> GetProjectsWithNoEmployees();
         Task<IEnumerable<object>> GetProjectsManagedByFemaleManagers();
+        Task<Project> AddProjectAsync(Project project);
     }
 }

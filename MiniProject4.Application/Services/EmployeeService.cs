@@ -120,5 +120,27 @@ namespace MiniProject4.Application.Services
                 .OrderBy(e => e.Lname)
                 .ToList();
         }
+
+        public async Task<Employee> AddAsync(Employee employee)
+        {
+            // Get the maximum allowed employees for the IT department from configuration
+            var maxITEmployees = _configuration.GetValue<int>("CompanySettings:ITDepartmentMaxEmployee");
+
+            // Check if the employee is being added to the IT department
+            var itDepartment = await _departmentRepository.GetDepartmentByName("IT");
+            if (itDepartment != null && employee.Deptno == itDepartment.Deptno)
+            {
+                // Count the current employees in the IT department
+                var currentITEmployees = await _departmentRepository.GetEmployee(itDepartment.Deptno);
+
+                if (currentITEmployees.Count() >= maxITEmployees)
+                {
+                    throw new InvalidOperationException($"The IT department already has the maximum allowed {maxITEmployees} employees.");
+                }
+            }
+
+            // Add the new employee
+            return await _employeeRepository.AddEmployee(employee);
+        }
     }
 }

@@ -68,5 +68,12 @@ namespace MiniProject4.Infrastructure.Data.Repositories
 
             return department;
         }
+
+        public async Task<IEnumerable<Project>> GetProjectsByDepartmentId(int deptNo)
+        {
+            return await _context.Projects
+                .Where(p => p.Deptno == deptNo)
+                .ToListAsync();
+        }
     }
 }

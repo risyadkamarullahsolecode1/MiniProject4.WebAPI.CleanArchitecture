@@ -70,5 +70,22 @@ namespace MiniProject4.Application.Services
                 .OrderBy(x => x.Projname)
                 .ToList();
         }
+
+        public async Task<Project> AddProjectAsync(Project project)
+        {
+            // Get the maximum allowed projects per department from configuration
+            var maxProjectsPerDepartment = _configuration.GetValue<int>("CompanySettings:MaxProjectPerDepartment");
+
+            // Get the current count of projects in the department
+            var existingProjectsCount = await _projectRepository.GetProjectsByDepartmentId(project.Deptno);
+
+            if (existingProjectsCount.Count() >= maxProjectsPerDepartment)
+            {
+                throw new InvalidOperationException($"The department with ID {project.Deptno} already has the maximum allowed {maxProjectsPerDepartment} projects.");
+            }
+
+            // Add the new project
+            return await _projectRepository.AddProject(project);
+        }
     }
 }

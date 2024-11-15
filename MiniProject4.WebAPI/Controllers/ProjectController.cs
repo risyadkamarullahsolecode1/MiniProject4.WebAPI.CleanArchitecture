@@ -88,10 +88,10 @@ namespace MiniProject4.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Project>> AddProject(Project project)
+        public async Task<IActionResult> AddProject(Project project)
         {
-            var createdProject = await _projectRepository.AddProject(project);
-            return CreatedAtAction(nameof(GetProjectById), new { id = createdProject.Projno }, createdProject);
+            var createdProject = await _projectService.AddProjectAsync(project);
+            return Ok(createdProject);
         }
 
         [HttpPut("{id}")]

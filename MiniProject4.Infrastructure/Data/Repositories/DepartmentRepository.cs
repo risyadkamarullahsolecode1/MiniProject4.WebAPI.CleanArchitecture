@@ -58,5 +58,11 @@ namespace MiniProject4.Infrastructure.Data.Repositories
                 .ToListAsync();
             return employeeInDept;
         }
+
+        public async Task<Department> GetDepartmentByName(string name)
+        {
+            return await _context.Departments
+                .FirstOrDefaultAsync(d => d.Deptname == name);
+        }
     }
 }
